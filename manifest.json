@@ -2,5 +2,8 @@
   "name": "TabLock",
   "version": "1.0",
   "description": "Temporarily lock tabs for privacy",
-  "manifest_version": 2
+  
+  ,"manifest_version": 2
+
+
 }
