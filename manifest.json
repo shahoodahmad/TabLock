@@ -2,6 +2,8 @@
   "name": "TabLock",
   "version": "1.0",
   "description": "Temporarily lock tabs for privacy",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  
   "manifest_version": 2
+
+
 }

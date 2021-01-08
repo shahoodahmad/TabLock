@@ -1,0 +1,32 @@
+.button {
+  display: inline-grid;
+  border-radius: 4px;
+  background-color:#ffe2f2;
+  border: bold;
+  color: FloralWhite;
+  text-align: center;
+  font-size: 25px;
+  padding: 15px;
+  width: 120px;
+  cursor: pointer;
+  margin: 5px;
+  position: relative;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+.header{
+  border: bold;
+  border-width: medium;
+  width: 540;
+  font-size: 20px;
+  background-color: #84e657;
+}
+
+div{
+  align: center;
+  border-radius: 20px;
+  max-width: 540px;
+  background-color: #84e657;
+  padding-bottom: 10px;
+
+}
