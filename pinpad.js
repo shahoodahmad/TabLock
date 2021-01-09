@@ -1,10 +1,10 @@
 let input = document.getElementById("pad");
 
 function clicked(string){
-  if (string != "back"){
+  let len = input.value.length;
+  if (string != "back" && len<6){
     input.value += string;
-  } else {
-    let len = input.value.length;
+  } else if(string == "back"){
     input.value = input.value.substring(0, len-1);
   }
 }

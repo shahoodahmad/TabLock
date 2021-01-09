@@ -9,10 +9,10 @@
 </head>
 <body>
   <center>
-  <form>
-    
+  <form autocomplete="off">
+
     <div>
-      <input width="500px" class="header" type="text" name="pinpad" id="pad" maxlength="6" placeholder="Enter your pin" pattern="[0-9]{4,6}"><br><br>
+      <input autocomplete="off" width="500px" class="header" type="text" name="pinpad" id="pad" minlength="4" maxlength="6" pattern="[0-9]{4,6}" required placeholder="Enter your pin"><br><br>
       <button class="button" type="button" name="one" onclick="clicked(1)">1</button>
       <button class="button" type="button" name="two" onclick="clicked(2)">2</button>
       <button class="button" type="button" name="three" onclick="clicked(3)">3</button><br>
