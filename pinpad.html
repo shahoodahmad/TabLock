@@ -9,10 +9,11 @@
 </head>
 <body>
   <center>
+    <h1>Enter a 4 to 6 digit pin</h1>
   <form autocomplete="off">
 
     <div>
-      <input autocomplete="off" width="500px" class="header" type="text" name="pinpad" id="pad" minlength="4" maxlength="6" pattern="[0-9]{4,6}" required placeholder="Enter your pin"><br><br>
+      <input autocomplete="off" class="header" type="text" name="pinpad" id="pad" minlength="4" maxlength="6" pattern="[0-9]{4,6}" required placeholder="Enter your pin"><br><br>
       <button class="button" type="button" name="one" onclick="clicked(1)">1</button>
       <button class="button" type="button" name="two" onclick="clicked(2)">2</button>
       <button class="button" type="button" name="three" onclick="clicked(3)">3</button><br>
@@ -22,10 +23,9 @@
       <button class="button" type="button" name="seven" onclick="clicked(7)">7</button>
       <button class="button" type="button" name="eight" onclick="clicked(8)">8</button>
       <button class="button" type="button" name="nine" onclick="clicked(9)">9</button><br>
-      <button class="button" type="button" name="backspace" onclick="clicked('back')">⌫</button>
+      <button class="button special" type="button" name="backspace" onclick="clicked('back')">⌫</button>
       <button class="button" type="button" name="zero" onclick="clicked(0)">0</button>
-      <input class="button" type="submit" name="submit" value="✔️">
-      <div></div>
+      <input class="button special" type="submit" name="submit" value="✔️">
     </div>
 </form>
 
