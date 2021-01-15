@@ -10,7 +10,7 @@
 <body>
   <center>
     <h1>Enter a 4 to 6 digit pin</h1>
-  <form autocomplete="off" action="" method="POST">
+  <form autocomplete="off" id="pinpad">
 
     <div>
       <input autocomplete="off" class="header" type="text" name="pinpad" id="pad" minlength="4" maxlength="6" pattern="[0-9]{4,6}" required placeholder="Enter your pin"><br><br>
@@ -25,7 +25,7 @@
       <button class="button" type="button" id="9">9</button><br>
       <button class="button special" type="button" id="10">⌫</button>
       <button class="button" type="button" id="0">0</button>
-      <input class="button special" type="submit" name="submit" value="✔️">
+      <input class="button special" type="submit" id="submit" name="submit" value="✔️">
     </div>
 </form>
 
