@@ -2,7 +2,7 @@
   "name": "TabLock",
   "version": "1.0",
   "description": "Temporarily lock tabs for privacy",
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "history"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
@@ -11,7 +11,7 @@
     "default_icon": {
 
     },
-    "default_popup": "pinpad.html"
+    "default_popup": "instance.html"
   },
   "options_page": "options.html",
   "manifest_version": 2
