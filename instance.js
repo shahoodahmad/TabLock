@@ -27,16 +27,16 @@ function unpackInstance(){
     
 }
 
-let count = 0; 
 
-let test = document.getElementById("test");
+/*let test = document.getElementById("test");
 test.addEventListener("click", function(){
     let body = document.getElementById("body");
     body.removeChild(document.getElementById(count));
     body.removeChild(document.getElementById("br" + count));
     count--;
-});
+});*/
 
+let count = 0;
 
 function setupInstance(tabInstance){
     let body = document.getElementById("body");
@@ -50,8 +50,8 @@ function setupInstance(tabInstance){
         chrome.tabs.create({url: tabInstance.URLs, active: false});
     });
 
-    body.appendChild(br);
     body.appendChild(btn);
+    body.appendChild(br);
 }
 
 document.getElementById("tab").addEventListener("click", function(){
