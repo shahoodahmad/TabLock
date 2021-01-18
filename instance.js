@@ -39,32 +39,46 @@ test.addEventListener("click", function(){
 let count = 0;
 
 function setupInstance(tabInstance){
-    let body = document.getElementById("body");
+    let delClicked = false;
+    let div = document.getElementById("div");
     let btn = document.createElement("button");
-    let delBtn = document.createElement("button");
+    let delBtn = document.createElement("span");
     btn.appendChild(document.createTextNode(tabInstance.name));
     btn.setAttribute("class", "instance");
     btn.setAttribute("id", count); //will replace count with the name of the
     delBtn.appendChild(document.createTextNode("X"));
     let br = document.createElement("br");
-    delBtn.setAttribute("class", "special")
+    delBtn.setAttribute("class", "close");
     br.setAttribute("id", "br" + count);
     btn.addEventListener("click", function(){
+      if(!delClicked){
         chrome.tabs.create({url: tabInstance.URLs, active: false});
+      }
+      else{
+        delClicked = false;
+      }
+    });
+    delBtn.addEventListener("click", function(){
+      div.removeChild(document.getElementById(count));
+      div.removeChild(document.getElementById("br" + count));
+      count--;
+      delClicked = true;
     });
 
-    body.appendChild(btn);
-    body.appendChild(delBtn);
-    body.appendChild(br);
+    div.appendChild(btn);
+    btn.appendChild(delBtn);
+    div.appendChild(br);
 }
 
 document.getElementById("tab").addEventListener("click", function(){
     chrome.tabs.query({active: true}, function(tabs){
 
         let insName = prompt("Enter a name");
-        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id);
-        setupInstance(tabInstance);
-        //chrome.tabs.remove(tabInstance.IDs);
+        if(insName != null){
+          let tabInstance = new instance(insName, tabs[0].url, tabs[0].id);
+          setupInstance(tabInstance);
+          //chrome.tabs.remove(tabInstance.IDs);
+        }
 
     });
 
