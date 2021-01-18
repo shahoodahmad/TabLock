@@ -5,3 +5,54 @@
     outline: none;
     border-radius: 100px;
 }
+
+h1{
+  font-family: Garamond, serif;
+  color: #000000;
+}
+
+body {
+  width: 500px;
+  height: 300px;
+}
+
+button {
+  display: inline-grid;
+  border-radius: 50%;
+  margin: 0;
+  position: absolute;
+  background-color: #ff4646;
+  border: none;
+  color: #fff5c0;
+  text-align: center;
+  font-size: 150%;
+  padding: 4%;
+  width: 17%;
+  outline: none;
+  cursor: pointer;
+  margin: 1%;
+  position: relative;
+  box-shadow: 0 2px #999;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+}
+
+button:hover {
+  background-color: #eb8383;
+}
+
+button:active {
+  background-color: #eb8383;
+  box-shadow: 0 1px #666;
+  transform: translateY(4%);
+}
+
+.special{
+  font-size: 100%;
+  border-radius: 50%;
+  width: 5%;
+  height: 10%;
+  left: 50%
+  position: fixed; /* or position: absolute; */
+  box-shadow: 0 0px;
+  text-align: center;
+}
