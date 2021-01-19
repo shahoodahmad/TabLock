@@ -2,7 +2,6 @@
     padding-right: 3%;
 }
 
-
 h1{
   font-family: Garamond, serif;
   color: #000000;
@@ -10,6 +9,7 @@ h1{
 
 body {
   width: 500px;
+  max-height: 300px;
   height: 300px;
   background-color: FloralWhite;
 }
@@ -57,13 +57,32 @@ button:active {
   background-color: #cf2b2b;
 }
 
-/*close{
-  font-size: 100%;
-  border-radius: 50%;
-  width: 5%;
-  height: 10%;
-  left: 0%
-  position: fixed;
-  box-shadow: 0 0px;
-  text-align: center;
-}*/
+#div{
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
+
+::-webkit-scrollbar {
+  width: 7.5px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff4646;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e83838;
+}
+
+#tab{
+  right: .5%;
+}
