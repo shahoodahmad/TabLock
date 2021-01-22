@@ -5,7 +5,7 @@ chrome.storage.sync.get("key", function(obj){
   instances = obj.key;
 
   if (instances.length > 0){
-    
+
     //putting instance buttons on screen
     for (let i = 0; i < instances.length; i++){
       setupInstance(instances[i]);
@@ -22,6 +22,7 @@ function instance(instance_name, url_list, id_list){
     this.name = instance_name; //Name of instance to be displayed
     this.URLs = url_list; //list of encrypted URLs
     this.IDs = id_list; //ids of tabs
+    this.pin = null;
     this.encrypt = encryptUrl(); //maybe don't need as part of the object
     this.decrypt = decryptUrl();
 }
@@ -48,20 +49,22 @@ function setupInstance(tabInstance){
     let div = document.getElementById("div");
     let btn = document.createElement("button");
     let delBtn = document.createElement("span");
-    
+
     //setup instance button
     btn.appendChild(document.createTextNode(tabInstance.name));
     btn.setAttribute("class", "instance");
     btn.setAttribute("id", tabInstance.name); //will replace count with the name of the
-    
+
     //setup delete button
     delBtn.appendChild(document.createTextNode("X"));
     delBtn.setAttribute("class", "close");
-    
+
     //loads tabs from instance
     btn.addEventListener("click", function(){
       if(!delClicked){
         chrome.tabs.create({url: tabInstance.URLs, active: false});
+        localStorage.setItem("pin", tabInstance.pin);
+        window.location.replace("pinpad.html");
       }
       else{
         delClicked = false;
@@ -72,7 +75,7 @@ function setupInstance(tabInstance){
     delBtn.addEventListener("click", function(){
       div.removeChild(document.getElementById(tabInstance.name));
       let pos = binSearch(instances, tabInstance);
-      
+
       //remove from array and update storage
       instances.splice(pos, 1);
       chrome.storage.sync.set({key: instances});
@@ -88,7 +91,7 @@ document.getElementById("tab").addEventListener("click", function(){
 
         let insName = prompt("Enter a name");
         let tabInstance = new instance(insName, tabs[0].url, tabs[0].id);
-        
+
         //error checking for invalid names
         while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
           if(insName == ""){
@@ -103,9 +106,14 @@ document.getElementById("tab").addEventListener("click", function(){
         }
 
         if(insName != null){
-          
+
+          //switch to pinpad
+          window.location.replace("pinpad.html");
+
+
+          tabInstance.pin = localStorage.getItem("pin");
+
           setupInstance(tabInstance);
-          
           instances.push(tabInstance);
 
           //sort instances alphabetically by name
@@ -117,10 +125,10 @@ document.getElementById("tab").addEventListener("click", function(){
             }
           });
           chrome.storage.sync.set({key: instances});
-          
-          //TODO: remove tab after instance is created  
+
+          //TODO: remove tab after instance is created
           //chrome.tabs.remove(tabInstance.IDs);
-        
+
         }
 
     });
@@ -158,13 +166,10 @@ function binSearch(instances, elem){
       end = mid;
     } else {//mid < elem
       start = mid + 1;
-    } 
+    }
 
   }
 
   return -1;
 
 }
-
-
-
