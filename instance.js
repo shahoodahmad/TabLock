@@ -173,3 +173,12 @@ function binSearch(instances, elem){
   return -1;
 
 }
+
+
+//let iFr = document.getElementById("pad-frm");
+//let elem = iFr.contentDocument.getElementById("1");
+//elem.style.display = "none";
+
+//window.frames['pad_frm'].document.getElementById('1').addEventListener("click", function(){
+  //  alert("1 pressed");
+//});

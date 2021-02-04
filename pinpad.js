@@ -36,7 +36,7 @@ document.getElementById("pinpad").addEventListener("submit", function(){
     //toggle_lock(true);
     alert("New pin set");
     //swap = true;
-
+    window.location.replace("instance.html");
 
   } else if ((status) && (lPin == aPin)){
     //tab is locked on submit and correct pin entered
@@ -45,16 +45,20 @@ document.getElementById("pinpad").addEventListener("submit", function(){
     localStorage.setItem("status", false);
     //swap = true
     //toggle_lock(false);
+    window.location.replace("instance.html");
+
 
   } else {
     //tab is locked on submit and incorrect pin entered
     alert("Incorrect pin");
+    window.location.replace("instance.html");
+
   }
   window.location.replace("instance.html");
 });
 
 function swap(){
-    alert("yes");
+    //alert("yes");
     window.location.replace("instance.html");
   }
 
