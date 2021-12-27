@@ -1,3 +1,9 @@
+//TODO: remove the pinpad and switch to password entry popup
+//TODO: Use an encryption library for encryption stuff
+//TODO: allow for saving multiple tabs in one instance
+
+
+
 let instances = [];
 
 //retrieve instances array from storage and add buttons for each instance
@@ -18,30 +24,17 @@ chrome.storage.sync.get("key", function(obj){
 
 
 //tab instance object constructor
-function instance(instance_name, url_list, id_list){
+function instance(instance_name, url_list, id_list, pwd){
     this.name = instance_name; //Name of instance to be displayed
     this.URLs = url_list; //list of encrypted URLs
     this.IDs = id_list; //ids of tabs
-    this.pin = null;
-    this.encrypt = encryptUrl(); //maybe don't need as part of the object
-    this.decrypt = decryptUrl();
+    this.pin = pwd; //password for the instance
 }
 
 //method to get list of URLs for instance
 function getUrls(){
 
 }
-
-//method to encrypt a URL
-function encryptUrl(){
-
-}
-
-//method to decrypt a URL
-function decryptUrl(){
-
-}
-
 
 function setupInstance(tabInstance){
     let delClicked = false; //flag var
@@ -62,9 +55,14 @@ function setupInstance(tabInstance){
     //loads tabs from instance
     btn.addEventListener("click", function(){
       if(!delClicked){
-        chrome.tabs.create({url: tabInstance.URLs, active: false});
-        localStorage.setItem("pin", tabInstance.pin);
-        window.location.replace("pinpad.html");
+        pwd = prompt("Enter your password.");
+        //localStorage.setItem("pin", tabInstance.pin); //tries to retrieve pin if there is or isn't a pin
+        if (pwd == tabInstance.pin) {
+            chrome.tabs.create({url: tabInstance.URLs, active: false});
+        } else {
+            alert("incorrect password.");
+        }
+
       }
       else{
         delClicked = false;
@@ -90,7 +88,8 @@ document.getElementById("tab").addEventListener("click", function(){
     chrome.tabs.query({active: true}, function(tabs){
 
         let insName = prompt("Enter a name");
-        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id);
+        let pwd = prompt("Enter a password for your instance");
+        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id, pwd); 
 
         //error checking for invalid names
         while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
@@ -107,11 +106,7 @@ document.getElementById("tab").addEventListener("click", function(){
 
         if(insName != null){
 
-          //switch to pinpad
-          window.location.replace("pinpad.html");
-
-
-          tabInstance.pin = localStorage.getItem("pin");
+          //tabInstance.pin = localStorage.getItem("pin");
 
           setupInstance(tabInstance);
           instances.push(tabInstance);
