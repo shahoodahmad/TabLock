@@ -58,9 +58,9 @@ function setupInstance(tabInstance){
         pwd = prompt("Enter your password.");
         //localStorage.setItem("pin", tabInstance.pin); //tries to retrieve pin if there is or isn't a pin
         if (pwd == tabInstance.pin) {
-            chrome.tabs.create({url: tabInstance.URLs, active: false});
+            chrome.tabs.create({url: tabInstance.URLs});
         } else {
-            alert("incorrect password.");
+            alert("Incorrect password.");
         }
 
       }
@@ -121,8 +121,9 @@ document.getElementById("tab").addEventListener("click", function(){
           });
           chrome.storage.sync.set({key: instances});
 
-          //TODO: remove tab after instance is created
-          //chrome.tabs.remove(tabInstance.IDs);
+          // TODO: test this feature, works sometimes 
+          // removes tab after instance is created
+          chrome.tabs.remove(tabInstance.IDs);
 
         }
 
