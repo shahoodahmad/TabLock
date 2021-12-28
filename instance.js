@@ -4,6 +4,7 @@
 //TODO: allow for saving multiple tabs in one instance
 
 let instances = [];
+let CryptoJS = require("crypto-js");
 
 //retrieve instances array from storage and add buttons for each instance
 chrome.storage.sync.get("key", function(obj){
@@ -23,11 +24,12 @@ chrome.storage.sync.get("key", function(obj){
 
 
 //tab instance object constructor
-function instance(instance_name, url_list, id_list, pwd){
+function instance(instance_name, url_list, id_list, pwd, slt){
     this.name = instance_name; //Name of instance to be displayed
     this.URLs = url_list; //list of encrypted URLs
     this.IDs = id_list; //ids of tabs
     this.pin = pwd; //password for the instance
+    this.salt = slt;
 }
 
 //method to get list of URLs for instance
@@ -54,8 +56,11 @@ function setupInstance(tabInstance){
     //loads tabs from instance
     btn.addEventListener("click", function(){
       if(!delClicked){
+        //salt and hash attempted password
         pwd = prompt("Enter your password.");
-        //localStorage.setItem("pin", tabInstance.pin); //tries to retrieve pin if there is or isn't a pin
+        salt = tabInstance.salt;
+        pwd = CryptoJS.SHA256(pwd + salt);
+
         if (pwd == tabInstance.pin) {
             chrome.tabs.create({url: tabInstance.URLs});
         } else {
@@ -88,7 +93,12 @@ document.getElementById("tab").addEventListener("click", function(){
 
         let insName = prompt("Enter a name");
         let pwd = prompt("Enter a password for your instance");
-        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id, pwd); 
+    
+        //generate 256 bit salt and hash + store password
+        let salt = CryptoJS.lib.WordArray.random(32);
+        pwd = CryptoJS.SHA256(pwd + salt);
+
+        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id, pwd, salt); 
 
         //error checking for invalid names
         while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
