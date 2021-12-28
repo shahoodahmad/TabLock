@@ -1,8 +1,7 @@
-//TODO: remove the pinpad and switch to password entry popup
 //TODO: Use an encryption library for encryption stuff
+  // URL -> encrypt with keys
+  // password -> hash (and salt) with crpytoJS
 //TODO: allow for saving multiple tabs in one instance
-
-
 
 let instances = [];
 
