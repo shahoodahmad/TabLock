@@ -4,7 +4,7 @@
 //TODO: allow for saving multiple tabs in one instance
 
 let instances = [];
-let CryptoJS = require("crypto-js");
+//var CryptoJS = require("crypto-js");
 
 //retrieve instances array from storage and add buttons for each instance
 chrome.storage.sync.get("key", function(obj){
@@ -59,7 +59,8 @@ function setupInstance(tabInstance){
         //salt and hash attempted password
         pwd = prompt("Enter your password.");
         salt = tabInstance.salt;
-        pwd = CryptoJS.SHA256(pwd + salt);
+        pwd = CryptoJS.SHA256(pwd + salt).toString();
+        console.log(pwd);        
 
         if (pwd == tabInstance.pin) {
             chrome.tabs.create({url: tabInstance.URLs});
@@ -95,8 +96,11 @@ document.getElementById("tab").addEventListener("click", function(){
         let pwd = prompt("Enter a password for your instance");
     
         //generate 256 bit salt and hash + store password
-        let salt = CryptoJS.lib.WordArray.random(32);
-        pwd = CryptoJS.SHA256(pwd + salt);
+        let salt = CryptoJS.lib.WordArray.random(32).toString();
+        console.log(salt);        
+        pwd = CryptoJS.SHA256(pwd.concat(salt)).toString();
+        console.log(pwd);        
+
 
         let tabInstance = new instance(insName, tabs[0].url, tabs[0].id, pwd, salt); 
 
@@ -132,7 +136,7 @@ document.getElementById("tab").addEventListener("click", function(){
 
           // TODO: test this feature, works sometimes 
           // removes tab after instance is created
-          chrome.tabs.remove(tabInstance.IDs);
+          //chrome.tabs.remove(tabInstance.IDs);
 
         }
 
