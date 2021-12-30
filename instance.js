@@ -1,6 +1,3 @@
-//TODO: Use an encryption library for encryption stuff
-  // URL -> encrypt with keys
-  // password -> hash (and salt) with crpytoJS
 //TODO: allow for saving multiple tabs in one instance
 
 let instances = [];
@@ -21,20 +18,12 @@ chrome.storage.sync.get("key", function(obj){
 });
 
 
-
-
 //tab instance object constructor
-function instance(instance_name, url_list, id_list, pwd, slt){
+function instance(instance_name, url_list, pwd, slt){
     this.name = instance_name; //Name of instance to be displayed
     this.URLs = url_list; //list of encrypted URLs
-    this.IDs = id_list; //ids of tabs
     this.pin = pwd; //password for the instance
     this.salt = slt;
-}
-
-//method to get list of URLs for instance
-function getUrls(){
-
 }
 
 function setupInstance(tabInstance){
@@ -59,11 +48,11 @@ function setupInstance(tabInstance){
         //salt and hash attempted password
         pwd = prompt("Enter your password.");
         salt = tabInstance.salt;
-        pwd = CryptoJS.SHA256(pwd + salt).toString();
-        console.log(pwd);        
+        hashedPwd = CryptoJS.SHA256(pwd + salt).toString();
 
-        if (pwd == tabInstance.pin) {
-            chrome.tabs.create({url: tabInstance.URLs});
+        if (hashedPwd == tabInstance.pin) {
+            let decryptedUrl = CryptoJS.AES.decrypt(tabInstance.URLs, pwd).toString(CryptoJS.enc.Utf8);
+            chrome.tabs.create({url: decryptedUrl});
         } else {
             alert("Incorrect password.");
         }
@@ -90,19 +79,19 @@ function setupInstance(tabInstance){
 }
 
 document.getElementById("tab").addEventListener("click", function(){
+    //Query focused window and get the active tab in that window
+    //chrome.window.query({focused: true}, function(window){}
     chrome.tabs.query({active: true}, function(tabs){
 
         let insName = prompt("Enter a name");
         let pwd = prompt("Enter a password for your instance");
     
+        let encUrl = CryptoJS.AES.encrypt(tabs[0].url, pwd);
         //generate 256 bit salt and hash + store password
         let salt = CryptoJS.lib.WordArray.random(32).toString();
-        console.log(salt);        
         pwd = CryptoJS.SHA256(pwd.concat(salt)).toString();
-        console.log(pwd);        
 
-
-        let tabInstance = new instance(insName, tabs[0].url, tabs[0].id, pwd, salt); 
+        let tabInstance = new instance(insName, encUrl, pwd, salt); 
 
         //error checking for invalid names
         while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
@@ -114,12 +103,10 @@ document.getElementById("tab").addEventListener("click", function(){
           else {
             insName = prompt("Name already in use, enter a new name");
           }
-          tabInstance = new instance(insName, tabs[0].url, tabs[0].id);
+          tabInstance = new instance(insName, encUrl, pwd, salt);
         }
 
         if(insName != null){
-
-          //tabInstance.pin = localStorage.getItem("pin");
 
           setupInstance(tabInstance);
           instances.push(tabInstance);
@@ -133,10 +120,6 @@ document.getElementById("tab").addEventListener("click", function(){
             }
           });
           chrome.storage.sync.set({key: instances});
-
-          // TODO: test this feature, works sometimes 
-          // removes tab after instance is created
-          //chrome.tabs.remove(tabInstance.IDs);
 
         }
 
