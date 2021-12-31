@@ -1,7 +1,6 @@
 //TODO: allow for saving multiple tabs in one instance
 
 let instances = [];
-//var CryptoJS = require("crypto-js");
 
 //retrieve instances array from storage and add buttons for each instance
 chrome.storage.sync.get("key", function(obj){
