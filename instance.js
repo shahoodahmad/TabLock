@@ -1,4 +1,11 @@
-//TODO: allow for saving multiple tabs in one instance
+//TODO: error handling
+//      only ask for password once we get a valid name
+//      error check on password (some basic requirements)
+//TODO: more intuitive ui
+//      Color code on windows vs tab instances
+//      better layout
+//      better description of how to use the extension
+//TODO: Tidy up code with comments
 
 let instances = [];
 
@@ -50,8 +57,10 @@ function setupInstance(tabInstance){
         hashedPwd = CryptoJS.SHA256(pwd + salt).toString();
 
         if (hashedPwd == tabInstance.pin) {
-            let decryptedUrl = CryptoJS.AES.decrypt(tabInstance.URLs, pwd).toString(CryptoJS.enc.Utf8);
-            chrome.tabs.create({url: decryptedUrl});
+            for (let i = 0; i < tabInstance.URLs.length; i++){
+                let decryptedUrl = CryptoJS.AES.decrypt(tabInstance.URLs[i], pwd).toString(CryptoJS.enc.Utf8);
+                chrome.tabs.create({url: decryptedUrl});
+            }
         } else {
             alert("Incorrect password.");
         }
@@ -77,54 +86,72 @@ function setupInstance(tabInstance){
     btn.appendChild(delBtn);
 }
 
-document.getElementById("tab").addEventListener("click", function(){
-    //Query focused window and get the active tab in that window
-    //chrome.window.query({focused: true}, function(window){}
-    chrome.tabs.query({active: true}, function(tabs){
+let createBtns = document.getElementsByClassName("create");
+    //add click listener to each button
+    for (let i = 0; i < createBtns.length; i++){
+        createBtns[i].addEventListener("click", function(){
+            let btnid = this.id;
+            //Query focused window and get the active tab in that window
+            chrome.windows.getLastFocused({populate: true}, function(wind){
+                console.log(wind);
+                let tabArray = wind.tabs;
+                if (btnid == "tab") {
+                    for (let i = 0; i < tabArray.length; i++){
+                        if (tabArray[i].active == true){
+                            tabArray = [tabArray[i]];
+                        }
+                    }
+                }
 
-        let insName = prompt("Enter a name");
-        let pwd = prompt("Enter a password for your instance");
-    
-        let encUrl = CryptoJS.AES.encrypt(tabs[0].url, pwd);
-        //generate 256 bit salt and hash + store password
-        let salt = CryptoJS.lib.WordArray.random(32).toString();
-        pwd = CryptoJS.SHA256(pwd.concat(salt)).toString();
 
-        let tabInstance = new instance(insName, encUrl, pwd, salt); 
+                let insName = prompt("Enter a name");
+                let pwd = prompt("Enter a password for your instance");
 
-        //error checking for invalid names
-        while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
-          if(insName == ""){
-            insName = prompt("Invalid entry: Enter another name");
-          } else if (insName.length > 10){
-            insName = prompt("Name cannot exceed 10 characters: Enter another name");
-          }
-          else {
-            insName = prompt("Name already in use, enter a new name");
-          }
-          tabInstance = new instance(insName, encUrl, pwd, salt);
-        }
+                //encrypt each url
+                let encUrl = [];
+                for (let i = 0; i < tabArray.length; i++){
+                    encUrl.push(CryptoJS.AES.encrypt(tabArray[i].url, pwd));
+                }
 
-        if(insName != null){
+                //generate 256 bit salt and hash + store password
+                let salt = CryptoJS.lib.WordArray.random(32).toString();
+                pwd = CryptoJS.SHA256(pwd.concat(salt)).toString();
+        
+                let tabInstance = new instance(insName, encUrl, pwd, salt); 
+        
+                //error checking for invalid names
+                while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
+                    if(insName == ""){
+                        insName = prompt("Invalid entry: Enter another name");
+                    } else if (insName.length > 10){
+                        insName = prompt("Name cannot exceed 10 characters: Enter another name");
+                    }
+                    else {
+                        insName = prompt("Name already in use, enter a new name");
+                    }
+                    tabInstance = new instance(insName, encUrl, pwd, salt);
+                }
 
-          setupInstance(tabInstance);
-          instances.push(tabInstance);
+                if(insName != null){
+                    setupInstance(tabInstance);
+                    instances.push(tabInstance);
 
-          //sort instances alphabetically by name
-          instances.sort(function(x, y){
-            if (x.name > y.name){
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          chrome.storage.sync.set({key: instances});
+                    //sort instances alphabetically by name
+                    instances.sort(function(x, y){
+                        if (x.name > y.name){
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    });
+                    chrome.storage.sync.set({key: instances});
+                }
 
-        }
 
-    });
 
-});
+            }); //window query
+        }); //event listener
+    }//end for loop
 
 //checks if instance is already in instance array
 function inGroup(instances, elem){

@@ -2,7 +2,7 @@
   "name": "TabLock",
   "version": "1.0",
   "description": "Temporarily lock tabs for privacy",
-  "permissions": ["tabs", "history", "storage"],
+  "permissions": ["tabs", "history", "storage", "windows"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
