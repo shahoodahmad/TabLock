@@ -1,6 +1,4 @@
-//TODO: error handling
-//      only ask for password once we get a valid name
-//      error check on password (some basic requirements)
+
 //TODO: more intuitive ui
 //      Color code on windows vs tab instances
 //      better layout
@@ -25,11 +23,12 @@ chrome.storage.sync.get("key", function(obj){
 
 
 //tab instance object constructor
-function instance(instance_name, url_list, pwd, slt){
+function instance(instance_name, url_list, pwd, slt, isWindow){
     this.name = instance_name; //Name of instance to be displayed
     this.URLs = url_list; //list of encrypted URLs
     this.pin = pwd; //password for the instance
     this.salt = slt;
+    this.isWindow = isWindow; 
 }
 
 function setupInstance(tabInstance){
@@ -95,7 +94,10 @@ let createBtns = document.getElementsByClassName("create");
             chrome.windows.getLastFocused({populate: true}, function(wind){
                 console.log(wind);
                 let tabArray = wind.tabs;
+
+                var isWindow = true;
                 if (btnid == "tab") {
+                  isWindow = false;
                     for (let i = 0; i < tabArray.length; i++){
                         if (tabArray[i].active == true){
                             tabArray = [tabArray[i]];
@@ -103,10 +105,22 @@ let createBtns = document.getElementsByClassName("create");
                     }
                 }
 
+                let insName = prompt("Enter a name");           
+      
+                //error checking for invalid names
+                while (insName == "" || insName.length > 10 || inGroup(instances, insName)){
+                    if(insName == ""){
+                        insName = prompt("Invalid entry: Enter another name");
+                    } else if (insName.length > 10){
+                        insName = prompt("Name cannot exceed 10 characters: Enter another name");
+                    }
+                    else {
+                        insName = prompt("Name already in use, enter a new name");
+                    }  
+                }
 
-                let insName = prompt("Enter a name");
                 let pwd = prompt("Enter a password for your instance");
-
+                
                 //encrypt each url
                 let encUrl = [];
                 for (let i = 0; i < tabArray.length; i++){
@@ -117,20 +131,7 @@ let createBtns = document.getElementsByClassName("create");
                 let salt = CryptoJS.lib.WordArray.random(32).toString();
                 pwd = CryptoJS.SHA256(pwd.concat(salt)).toString();
         
-                let tabInstance = new instance(insName, encUrl, pwd, salt); 
-        
-                //error checking for invalid names
-                while (insName == "" || insName.length > 10 || inGroup(instances, tabInstance)){
-                    if(insName == ""){
-                        insName = prompt("Invalid entry: Enter another name");
-                    } else if (insName.length > 10){
-                        insName = prompt("Name cannot exceed 10 characters: Enter another name");
-                    }
-                    else {
-                        insName = prompt("Name already in use, enter a new name");
-                    }
-                    tabInstance = new instance(insName, encUrl, pwd, salt);
-                }
+                let tabInstance = new instance(insName, encUrl, pwd, salt, isWindow);
 
                 if(insName != null){
                     setupInstance(tabInstance);
@@ -147,8 +148,6 @@ let createBtns = document.getElementsByClassName("create");
                     chrome.storage.sync.set({key: instances});
                 }
 
-
-
             }); //window query
         }); //event listener
     }//end for loop
@@ -163,9 +162,9 @@ function inGroup(instances, elem){
 }
 
 function compare(x, y){
-  if (x.name > y.name){
+  if (x.name > y){
     return 1;
-  } else if (x.name == y.name){
+  } else if (x.name == y){
     return 0;
   } else {
     return -1;
