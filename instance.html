@@ -6,18 +6,32 @@
 </head>
 
 
-<body id="body">
+<body>
+  <!-- Header banner -->
+  <div id="header">
+    <img src="favicon.png" width="15%" height="15%">
+    <h1 id="tablock" class="header-text">TabLock</h1>
+    <span id="hdr-text" class="header-text"><b>Save</b> tabs with <b>security</b></span>
+
+  </div>
   <div id="container">
   <center>
+  <!-- Div that holds the containers for tab instances and window instances -->
   <div id="mainDiv">
 
-    <h1> CLICK TO ADD A NEW TAB INSTANCE </h1>
-    <button id="tab" class="create">save tab</button>
-    <button id="window" class="create">save window</button>
-    <br>
-    <br>
-    <!--div to add instance buttons to-->
-    <div id="div"></div>
+    <div class="btnContainer" id="tabContainer">
+        <button id="tabBtn" class="create"><span class="plus">+</span> save tab</button>
+
+
+    </div>
+
+    <div id="divider"></div>
+
+    <div class="btnContainer" id="windowContainer">
+        <button id="windowBtn" class="create"><span class="plus">+</span> save window</button>
+            
+
+    </div>
 
   </div>
   </center>

@@ -3,85 +3,143 @@
 }
 
 h1{
-  font-family: Garamond, serif;
-  color: #000000;
+  font-family: Tahoma, serif;
 }
 
 body {
   width: 400px;
   max-height: 350px;
   height: 350px;
-  background-color: FloralWhite;
-}
-
-/*.pad-fr{
-  width: 500px;
-  height: 350px;
-  position: absolute;
-  padding: 0px;
-  border: 0px;
-  margin: 0px;
-}*/
-
-#container{
-  position: relative;
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-}
-
-button {
-  display: inline-grid;
-  border-radius: 100px;
-  background-color: #ff4646;
-  border: none;
-  color: FloralWhite;
-  text-align: center;
-  font-size: 150%;
-  padding: 2% 4%;
-  width: 40%;
-  height: 10%;
-  outline: none;
-  cursor: pointer;
-  margin: 1%;
-  position: relative;
-  box-shadow: 0 2px #999;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
-}
-
-button:hover {
-  background-color: #e83838;
-}
-
-button:active {
-  background-color: #e83838;
-  box-shadow: 0 1px #666;
-  transform: translateY(4%);
-}
-
-.close{
-  right: 0%;
-  width: 15%;
-  height: 33%;
-  padding: 8% 3.5%;
-  font-size: 60%;
-  position: absolute;
-  border-radius: 0px 100px 100px 0px;
-}
-
-.close:hover{
-  background-color: #cf2b2b;
+  background-color: #d3d6e3;
 }
 
 div {
   position: relative;
 }
 
-#div{
-  overflow-y: scroll;
-  max-height: 200px;
+/*--------------------header styling-------------------------*/
+
+.header-text{
+    display: inline;
+    font-style: italic;
+    position: absolute;
 }
 
+#hdr-text{
+    font-size: 1.5em;
+    top: 37%;
+    left: 50%;
+}
+
+#tablock{
+    color: #2d9bf0;
+    font-size: 2.5em;
+    top: -10%;
+}
+
+#header{
+    background-color: #a7acc6;   
+    width: 100%;
+    position: relative;
+}
+
+#container{
+  position: relative;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+/*----------------------Button Container styling----------------------*/
+
+#mainDiv{
+    display: grid;
+    grid-template-columns: 1fr .005fr 1fr;
+    grid-column-gap: 1%;
+    margin: 5% 0 0;
+    width: 95%;
+    height: 260px;
+}
+
+#divider{
+    height: 100%;
+    width: 100%;
+    background-color: #a7acc6;
+}
+
+.btnContainer{
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+
+}
+
+/*----------------------Button styling----------------------*/
+
+button {
+  border-radius: 100px;
+  background-color: #4e598c;
+  border: none;
+  color: FloralWhite;
+  text-align: center;
+  font-family: Tahoma, serif;
+  font-size: 150%;
+  padding: 2% 4%;
+  width: 80%;
+  height: 12%;
+  margin: 1%;
+  position: relative;
+  box-shadow: 0 2px #999;
+}
+
+button:hover {
+  background-color: #414a75;
+}
+
+button:active {
+  background-color: #414a75;
+  box-shadow: 0 1px #666;
+  transform: translateY(4%);
+}
+
+/*-----------------------------Create Button Styling----------------*/
+
+.create{
+    background-color: #d3d6e3;
+    color: black;
+    box-shadow: none;
+}
+
+.create:hover{
+    background-color: #4e598c;
+    color: FloralWhite;
+    box-shadow: 0 2px #999;
+}
+
+.plus{
+
+}
+
+/*-------------------------Close Button Styling-----------------*/
+
+.close{
+  right: 0%;
+  top: 5%;
+  width: 15%;
+  height: 22%;
+  padding: 8% 3.5%;
+  font-size: 50%;
+  position: absolute;
+  border-radius: 0px 100px 100px 0px;
+}
+
+.close:hover{
+  background-color: #373f63;
+}
+
+
+/*--------------------------Scrollbar Styling-----------------*/
 
 ::-webkit-scrollbar {
   width: 7.5px;
@@ -95,14 +153,11 @@ div {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ff4646;
+  background: #4e598c;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e83838;
+  background: #414a75;
 }
 
-#tab{
-  right: .5%;
-}
