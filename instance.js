@@ -234,3 +234,21 @@ function binSearch(instances, elem){
 
 }
 
+// event listeners to display tooltip on functional buttons
+document.getElementById("tabBtn").addEventListener("mouseover", function(){
+    document.getElementById("tooltip_tab").style.display="block";
+});
+
+document.getElementById("tabBtn").addEventListener("mouseleave", function(){
+  document.getElementById("tooltip_tab").style.display="none";
+});
+
+document.getElementById("windowBtn").addEventListener("mouseover", function(){
+    document.getElementById("tooltip_window").style.display="block";
+});
+
+document.getElementById("windowBtn").addEventListener("mouseleave", function(){
+  document.getElementById("tooltip_window").style.display="none";
+});
+
+
