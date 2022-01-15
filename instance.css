@@ -90,24 +90,29 @@ div {
 /*----------------------Tooltip styling----------------------*/
 
 #tooltip_tab{
+  font-size: 16px;
   position: absolute;
   display: none;
+  border-radius: 5px;
   background-color: #a7acc6;
-  border-radius: 15%;
   animation-name: appear;
   animation-duration: 1.5s;
-  padding: 1.2% ;
+  margin-left: 31%;
+  margin-top: -.2%; 
+  padding: 0% 1.2% .2% 1.2% ;
 }
 
 #tooltip_window{
+  font-size: 16px;
   position: absolute;
   display: none;
+  border-radius: 5px;
   background-color: #a7acc6;
-  border-radius: 15%;
   animation-name: appear;
   animation-duration: 1.5s;
-  margin-left: 30%;
-  padding: 1.2% ;
+  margin-left: 20%;
+  margin-top: -.2%; 
+  padding: 0% 1.2% .2% 1.2% ;
 }
 
 @keyframes appear {
