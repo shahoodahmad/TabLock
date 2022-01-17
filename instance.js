@@ -1,13 +1,17 @@
-// TODO: storage issues - fix by switching to local and null checking array
 // TODO: finalize readme
 
 //Global variable for storing all the instances
 let instances = [];
-let reservedKeywords = ['header', 'tablock', 'hdr-text', 'container', 'mainDiv', 'tabBtn', 'windowBtn', 'tabContainer', 'windowContainer', 'divider'];
+let reservedKeywords = ['logoimg', 'header', 'tablock', 'hdr-text', 'container', 'mainDiv', 'tabBtn', 'windowBtn', 'tabContainer', 'windowContainer', 'divider'];
 
 //retrieve instances array from storage and add buttons for each instance
-chrome.storage.sync.get("key", function(obj){
+chrome.storage.local.get("key", function(obj){
   instances = obj.key;
+
+  //initialize array if it has not been previously initialized
+  if (typeof instances == "undefined") {
+      instances = [];
+  }
 
   if (instances.length > 0){
 
@@ -88,7 +92,7 @@ function setupInstance(tabInstance){
 
       //remove from array and update storage
       instances.splice(pos, 1);
-      chrome.storage.sync.set({key: instances});
+      chrome.storage.local.set({key: instances});
       delClicked = true;
     });
 
@@ -145,7 +149,7 @@ let createBtns = document.getElementsByClassName("create");
                         return -1;
                     }
                  });
-                 chrome.storage.sync.set({key: instances});
+                 chrome.storage.local.set({key: instances});
 
             }); //window query
         }); //event listener
