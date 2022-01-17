@@ -1,5 +1,5 @@
-//TODO: better description of how to use the extension (tooltips, maybe usage guide at bottom)
-//TODO: add some css animations maybe
+// TODO: storage issues - fix by switching to local and null checking array
+// TODO: finalize readme
 
 //Global variable for storing all the instances
 let instances = [];

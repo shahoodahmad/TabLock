@@ -93,7 +93,7 @@ div {
   font-size: 16px;
   position: absolute;
   display: none;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;
   background-color: #a7acc6;
   animation-name: appear;
   animation-duration: 1.5s;
@@ -106,7 +106,7 @@ div {
   font-size: 16px;
   position: absolute;
   display: none;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;
   background-color: #a7acc6;
   animation-name: appear;
   animation-duration: 1.5s;
