@@ -42,8 +42,8 @@ h1{
 
 body {
   width: 400px;
-  max-height: 350px;
-  height: 350px;
+  max-height: 385px;
+  height: 385px;
   background-color: #d3d6e3;
 }
 
@@ -237,3 +237,22 @@ button:active {
   background: #414a75;
 }
 
+/*--------------------------Footer Styling-----------------*/
+#footer{
+  font-family: Tahoma, serif;
+  font-size: 14px;
+  margin-top: 72%;
+  background-color: #a7acc6;   
+  font-style: italic;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+a{
+  text-decoration: none;
+  color: #4e598c;
+}
+
+a:hover {
+  color: #163eec;
+}

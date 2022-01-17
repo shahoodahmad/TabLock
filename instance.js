@@ -1,13 +1,9 @@
 //TODO: better description of how to use the extension (tooltips, maybe usage guide at bottom)
 //TODO: add some css animations maybe
-//TODO: README on github repo
-//      installation guide
-//      usage instructions
-//      explanation of features
 
 //Global variable for storing all the instances
 let instances = [];
-let reservedKeywords = ['header', 'tablock', 'hdr-text', 'container', 'mainDiv', 'tabBtn', 'windowBtn', 'tabContainer', 'windowContainer', 'divider']
+let reservedKeywords = ['header', 'tablock', 'hdr-text', 'container', 'mainDiv', 'tabBtn', 'windowBtn', 'tabContainer', 'windowContainer', 'divider'];
 
 //retrieve instances array from storage and add buttons for each instance
 chrome.storage.sync.get("key", function(obj){
@@ -21,7 +17,7 @@ chrome.storage.sync.get("key", function(obj){
     }
   }
 
-});
+});  
 
 
 //tab instance object constructor
