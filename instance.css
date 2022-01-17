@@ -60,20 +60,7 @@ div {
 
 /*----------------------Tooltip styling----------------------*/
 
-#tooltip_tab{
-  font-size: 16px;
-  position: absolute;
-  display: none;
-  border-radius: 0px 0px 5px 5px;
-  background-color: #a7acc6;
-  animation-name: appear;
-  animation-duration: 1.5s;
-  margin-left: 31%;
-  margin-top: -.2%; 
-  padding: 0% 1.2% .2% 1.2% ;
-}
-
-#tooltip_window{
+.tooltip{
   font-size: 16px;
   position: absolute;
   display: none;
@@ -81,9 +68,16 @@ div {
   background-color: #a7acc6;
   animation-name: appear;
   animation-duration: 1.0s;
-  margin-left: 20%;
   margin-top: -.2%; 
   padding: 0% 1.2% .2% 1.2% ;
+}
+
+#tooltip_tab{
+  margin-left: 31%;
+}
+
+#tooltip_window{
+  margin-left: 20%;
 }
 
 @keyframes appear {
