@@ -1,4 +1,5 @@
-# TabLock ![Logo](favicon.svg)
+# TabLock <img src="favicon.svg" alt="logo" width="20"/>
+
 ### ***Save*** tabs with ***security***
 <pre>
 1. Introduction
